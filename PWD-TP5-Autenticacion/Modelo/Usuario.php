@@ -144,7 +144,7 @@ class Usuario {
         if($res>-1){
             if($res>0){
                 while ($row = $base->Registro()){
-                    $obj= new usuario();
+                    $obj= new Usuario();
                     $obj->setear($row['idusuario'], $row['usnombre'], $row['uspass'], $row['usmail'], $row['usdeshabilitado']);
                     array_push($arreglo, $obj);
                 }
