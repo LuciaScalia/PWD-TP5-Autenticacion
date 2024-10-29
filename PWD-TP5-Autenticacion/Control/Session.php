@@ -24,7 +24,7 @@ class Session {
     }
 
     public function getUsuario() {
-        $usuario = null;
+        $usuario = [];
         if ($this->activa()) {
             $usuarioAbm = new AbmUsuario();
             $usuario = $usuarioAbm->buscar(['usnombre' => $_SESSION['usnombre']]);
@@ -34,7 +34,7 @@ class Session {
 
     public function getRol() {
         $usuario = $this->getUsuario();
-        $rol = null;
+        $rol = [];
         if (!empty($usuario)) {
             $rolUsuarioAbm = new AbmUsuarioRol();
             $rol = $rolUsuarioAbm->buscar(['idusuario' => $usuario['idusuario']]);
