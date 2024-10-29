@@ -19,7 +19,7 @@
 -- 
 
 CREATE TABLE `usuario` (
-    `idusuario` BIGINT (20) NOT NULL,
+    `idusuario` BIGINT (20) NOT NULL AUTO_INCREMENT,
     `usnombre` VARCHAR(50) character set utf8 collate utf8_unicode_ci NOT NULL,
     `uspass` INT(11) NOT NULL,
     `usmail` VARCHAR(50) character set utf8 collate utf8_unicode_ci NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `usuario` (
 -- Estructura de tabla para la tabla `rol`
 -- 
 CREATE TABLE  `rol`(
-    `idrol` BIGINT(20) NOT NULL,
+    `idrol` BIGINT(20) NOT NULL AUTO_INCREMENT,
     `rodescripcion` VARCHAR(50) character set utf8 collate utf8_unicode_ci NOT NULL,
     PRIMARY KEY (`idrol`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
