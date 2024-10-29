@@ -1,4 +1,6 @@
 <?php
+ 
+include_once '../configuracion.php';
 
 $obj = new Session();
 $obj->iniciar('Mora', 123);

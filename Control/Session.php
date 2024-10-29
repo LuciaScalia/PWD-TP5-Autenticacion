@@ -37,10 +37,10 @@ class Session {
         $rol = [];
         if (!empty($usuario)) {
             $rolUsuarioAbm = new AbmUsuarioRol();
-            $rol = $rolUsuarioAbm->buscar(['idusuario' => $usuario['idusuario']]);
+            $rol = $rolUsuarioAbm->buscar(['idusuario' => $usuario[0]->get_idusuario()]);
             if (!empty($rol)) {
                 $rolAbm = new AbmRol();
-                $rol = $rolAbm->buscar(['idrol' => $rolUsuarioAbm['idrol']]);
+                $rol = $rolAbm->buscar(['idrol' => $rol[0]->getIdRol()]);
             }
         }
         return $rol;
