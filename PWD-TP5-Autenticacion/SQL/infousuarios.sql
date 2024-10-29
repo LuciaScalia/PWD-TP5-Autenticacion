@@ -42,6 +42,7 @@ CREATE TABLE  `rol`(
 CREATE TABLE `usuariorol`(
     `idusuario` BIGINT (20) NOT NULL,
     `idrol` BIGINT (20) NOT NULL,
+    PRIMARY KEY (`idusuario`,`idrol`),
     FOREIGN KEY (`idusuario`) REFERENCES `usuario`(`idusuario`),
     FOREIGN KEY (`idrol`) REFERENCES `rol`(`idrol`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
