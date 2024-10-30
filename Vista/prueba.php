@@ -6,3 +6,4 @@ $obj = new Session();
 $obj->iniciar('Mora', 123);
 $rol = $obj->getRol();
 print_r($rol);
+print_r($_SESSION);

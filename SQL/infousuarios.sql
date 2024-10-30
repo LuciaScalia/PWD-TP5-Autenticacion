@@ -23,7 +23,7 @@ CREATE TABLE `usuario` (
     `usnombre` VARCHAR(50) character set utf8 collate utf8_unicode_ci NOT NULL,
     `uspass` INT(11) NOT NULL,
     `usmail` VARCHAR(50) character set utf8 collate utf8_unicode_ci NOT NULL,
-    `usdeshabilitado` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `usdeshabilitado` TIMESTAMP NULL,
     PRIMARY KEY (`idusuario`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

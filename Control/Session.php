@@ -1,54 +1,94 @@
 <?php
-//$_SESSION — Variables de sesión
-class Session {
-    
-    public function __construct() {
-        if(session_status() === PHP_SESSION_NONE) {
-            session_start();
+class Session{
+
+    public function __construct(){  
+        $resp= false;
+        if (session_start()) {
+            $resp= true;
         }
-    }
-
+        return $resp;
+      }
+   
+    /**
+     * Actualiza las variables de sesión con los valores ingresados.
+     */
     public function iniciar($usuario, $pass) {
-        $_SESSION['usnombre'] = $usuario;
-        $_SESSION['uspass'] = $pass;
+        $iniciado = false;
+        $abmUsuario = new AbmUsuario();
+        $param['usnombre'] = $usuario;
+        $param['uspass'] = $pass;
+        $param['usdeshabilitado'] = null;
+        
+        $usuario = $abmUsuario->buscar($param);
+        if (!empty($usuario)) {
+            $usuario = $usuario[0];
+            $_SESSION['idusuario'] = $usuario->get_idusuario();
+            $iniciado = true;
+        } else {
+            $this->cerrar();
+        }
+        return $iniciado;
     }
 
-    public function validar() {
-        $sesionValida = isset($_SESSION['usnombre']) && isset($_SESSION['uspass']) ? true : false;
-        return $sesionValida;
-    }
-
+    /**
+     *Devuelve true o false si la sesión está activa o no.
+     */
     public function activa() {
-        $sesionActiva = $this->validar() && session_status() === PHP_SESSION_ACTIVE ? true : false;
+        $sesionActiva = session_status() === PHP_SESSION_ACTIVE ? true : false;
+        //$sesionActiva = session_id() === '' ? false : true;
         return $sesionActiva;
     }
-
+    
+    /**
+     * Valida si la sesión actual tiene usuario y psw válidos. Devuelve true o false.
+     */
+    public function validar() {
+        $sesionValida = $this->activa() && isset($_SESSION['idusuario']) ? true : false;
+        return $sesionValida;
+    }
+   
+    /**
+     * Devuelve el usuario logeado.
+     */
     public function getUsuario() {
         $usuario = [];
-        if ($this->activa()) {
+        if ($this->validar()) {
             $usuarioAbm = new AbmUsuario();
-            $usuario = $usuarioAbm->buscar(['usnombre' => $_SESSION['usnombre']]);
+            $resultado = $usuarioAbm->buscar(['idusuario' => $_SESSION['idusuario']]);
+            if (!empty($resultado)) {
+                $usuario = $resultado[0];
+            }
         }
         return $usuario;
     }
 
+     /**
+     * Devuelve el rol del usuario logeado.
+     */
     public function getRol() {
-        $usuario = $this->getUsuario();
         $rol = [];
-        if (!empty($usuario)) {
+        $usuario = $this->getUsuario();
+        if ($this->validar() && !empty($usuario)) {
             $rolUsuarioAbm = new AbmUsuarioRol();
-            $rol = $rolUsuarioAbm->buscar(['idusuario' => $usuario[0]->get_idusuario()]);
+            $rol = $rolUsuarioAbm->buscar(['idusuario' => $usuario->get_idusuario()]);
             if (!empty($rol)) {
                 $rolAbm = new AbmRol();
                 $rol = $rolAbm->buscar(['idrol' => $rol[0]->getIdRol()]);
+                if (!empty($rol)) {
+                    $rol = $rol[0];
+                }
             }
         }
         return $rol;
     }
-
-    public function cerrar() {
-        //actualizar usdeshabilitado(? // eso sería para el borrado lógico
-        session_unset();
+    
+    /**
+     *Cierra la sesión actual.
+     */
+    public function cerrar(){
+        $resp = true;
         session_destroy();
+        return $resp;
     }
 }
+?>
