@@ -10,7 +10,10 @@ class AbmUsuarioRol {
         $obj = null;
         if( array_key_exists('idusuario',$param) && array_key_exists('idrol',$param)){
             $obj = new UsuarioRol();
-            $obj->setear($param['idusuario'], $param['idrol']);
+           $usuario= new Usuario();
+           $usuario->set_idusuario($param['idusuario']);
+           $rol= new Rol();
+           $rol->set_idrol($usuario,$rol);
         }
         return $obj;
     }
@@ -24,7 +27,11 @@ class AbmUsuarioRol {
         $obj = null;
         if(isset($param['idusuario']) && isset($param['idrol']) ){
             $obj = new UsuarioRol();
-            $obj->setear($param['idusuario'],$param['idrol']);
+            $usuario= new Usuario();
+            $usuario->set_idusuario($param['idusuario']);
+            $rol= new Rol();
+            $rol->set_idrol($param['idrol']);
+            $obj->setear($usuario,$rol);
         }
         return $obj;
     }
@@ -63,7 +70,7 @@ class AbmUsuarioRol {
         $resp = false;
         if ($this->seteadosCamposClaves($param)){
             $elObjtRol = $this->cargarObjetoConClave($param);
-            if ($elObjtRol!=null and $elObjtRol->eliminar()){
+            if ($elObjtRol!=null && $elObjtRol->eliminar()){
                 $resp = true;
             }
         }
@@ -80,7 +87,7 @@ class AbmUsuarioRol {
         $resp = false;
         if ($this->seteadosCamposClaves($param)){
             $elObjtRol = $this->cargarObjeto($param);
-            if($elObjtRol!=null and $elObjtRol->modificar()){
+            if($elObjtRol!=null && $elObjtRol->modificar()){
                 $resp = true;
             }
         }
