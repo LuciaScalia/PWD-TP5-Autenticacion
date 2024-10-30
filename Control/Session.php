@@ -51,7 +51,7 @@ class Session{
      * Devuelve el usuario logeado.
      */
     public function getUsuario() {
-        $usuario = [];
+        $usuario = null;
         if ($this->validar()) {
             $usuarioAbm = new AbmUsuario();
             $resultado = $usuarioAbm->buscar(['idusuario' => $_SESSION['idusuario']]);
@@ -66,16 +66,16 @@ class Session{
      * Devuelve el rol del usuario logeado.
      */
     public function getRol() {
-        $rol = [];
+        $rol = null;
         $usuario = $this->getUsuario();
         if ($this->validar() && !empty($usuario)) {
             $rolUsuarioAbm = new AbmUsuarioRol();
-            $rol = $rolUsuarioAbm->buscar(['idusuario' => $usuario->get_idusuario()]);
-            if (!empty($rol)) {
-                $rolAbm = new AbmRol();
-                $rol = $rolAbm->buscar(['idrol' => $rol[0]->getIdRol()]);
-                if (!empty($rol)) {
-                    $rol = $rol[0];
+            $rolData = $rolUsuarioAbm->buscar(['idusuario' => $usuario->get_idusuario()]);
+            if (!empty($rolData)) {
+                $usuarioRol = $rolData[0];
+                $rolObj = $usuarioRol->get_objrol();
+                if (!empty($rolObj)) {
+                    $rol = $rolObj;
                 }
             }
         }

@@ -109,7 +109,7 @@ class AbmUsuarioRol {
             if  (isset($param['idrol']))
                  $where.=" and idrol ='".$param['idrol']."'";
         }
-        $arreglo = UsuarioRol::listar($where);  
+        $arreglo = UsuarioRol::listar($where);
         return $arreglo; 
     }
 }
