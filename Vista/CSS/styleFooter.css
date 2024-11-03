@@ -1,0 +1,19 @@
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 100px;
+}
+
+main {
+    min-height: 100vh;
+    margin-bottom: -100px;
+}
+
+.footerInfo, .push {
+    height: 100px
+}
+
+.footerInfo {
+    margin: 10px 40px 0px 40px;
+}
