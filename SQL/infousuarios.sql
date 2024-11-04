@@ -21,7 +21,7 @@
 CREATE TABLE `usuario` (
     `idusuario` BIGINT (20) NOT NULL AUTO_INCREMENT,
     `usnombre` VARCHAR(50) character set utf8 collate utf8_unicode_ci NOT NULL,
-    `uspass` INT(11) NOT NULL,
+    `uspass` VARCHAR(100) NOT NULL,
     `usmail` VARCHAR(50) character set utf8 collate utf8_unicode_ci NOT NULL,
     `usdeshabilitado` TIMESTAMP NULL,
     PRIMARY KEY (`idusuario`)

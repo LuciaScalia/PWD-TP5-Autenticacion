@@ -13,7 +13,7 @@ class Session{
      * Actualiza las variables de sesión con los valores ingresados.
      */
     public function iniciar($usuario, $pass) {
-        $iniciado = false;
+        $resp = false;
         $abmUsuario = new AbmUsuario();
         $param['usnombre'] = $usuario;
         $param['uspass'] = $pass;
@@ -23,11 +23,11 @@ class Session{
         if (!empty($usuario)) {
             $usuario = $usuario[0];
             $_SESSION['idusuario'] = $usuario->get_idusuario();
-            $iniciado = true;
+            $resp = true;
         } else {
             $this->cerrar();
         }
-        return $iniciado;
+        return $resp;
     }
 
     /**
