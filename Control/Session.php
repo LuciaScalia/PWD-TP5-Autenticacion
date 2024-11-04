@@ -2,25 +2,20 @@
 class Session{
 
     public function __construct(){  
-        $resp= false;
-        if (session_start()) {
-            $resp= true;
-        }
-        return $resp;
+        session_start();
       }
    
     /**
      * Actualiza las variables de sesión con los valores ingresados.
      */
-    public function iniciar($usuario, $pass) {
+    public function iniciar($usuario, $uspass) {
         $resp = false;
         $abmUsuario = new AbmUsuario();
         $param['usnombre'] = $usuario;
-        $param['uspass'] = $pass;
         $param['usdeshabilitado'] = null;
         
         $usuario = $abmUsuario->buscar($param);
-        if (!empty($usuario)) {
+        if (!empty($usuario) && $uspass) {
             $usuario = $usuario[0];
             $_SESSION['idusuario'] = $usuario->get_idusuario();
             $resp = true;
@@ -35,7 +30,6 @@ class Session{
      */
     public function activa() {
         $sesionActiva = session_status() === PHP_SESSION_ACTIVE ? true : false;
-        //$sesionActiva = session_id() === '' ? false : true;
         return $sesionActiva;
     }
     
